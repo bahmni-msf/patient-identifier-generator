@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module configVersion="1.2">
+
+	<id>patientidentifiergenerator</id>
+	<name>Patient Identifier Generator Module</name>
+	<version>0.1.0</version>
+	<package>org.bahmni.module.patientidentifiergenerator</package>
+	<author>bahmni</author>
+	<description>
+		Helps to generate Patient Identifier
+	</description>
+
+	<activator>org.bahmni.module.patientidentifiergenerator.PatientIdentifierGeneratorActivator</activator>
+
+</module>
+

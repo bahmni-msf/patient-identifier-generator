@@ -10,7 +10,7 @@ Currently through openmrs we can set static prefix and suffix. With this module 
 
 If we configure static prefix and also set the global property say nationality the we get nationality+static prefix+number+gender 
 
-#Sample sql to  add abbreviation to concepts 
+# Sample sql to  add abbreviation to concepts 
 
 <pre>
 SELECT concept_source_id FROM concept_reference_source WHERE name = "Abbreviation";

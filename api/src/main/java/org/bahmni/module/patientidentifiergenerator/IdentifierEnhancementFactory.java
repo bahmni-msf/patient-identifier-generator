@@ -34,8 +34,12 @@ public class IdentifierEnhancementFactory {
     public void enhanceIdentifier(Patient patient) {
         PatientIdentifier identifier = patient.getPatientIdentifier();
         StringBuilder enhancedId = new StringBuilder();
-        enhancedId.append(getPrefix(patient)).append(identifier.getIdentifier());
+        enhancedId.append(getPrefix(patient)).append(identifier.getIdentifier()).append(getGender(patient));
         identifier.setIdentifier(enhancedId.toString());
+    }
+
+    private String getGender(Patient patient) {
+        return patient.getGender();
     }
 
     private String getPrefix(Patient patient) {

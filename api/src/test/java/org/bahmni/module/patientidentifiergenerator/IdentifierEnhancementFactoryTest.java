@@ -56,7 +56,7 @@ public class IdentifierEnhancementFactoryTest {
     }
 
     @Test
-    public void shouldAddGlobalPropertyPrefixToPatientIdentifier() {
+    public void shouldAddGlobalPropertyPrefixToPatientIdentifierAndGenderAsSuffix() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -67,11 +67,11 @@ public class IdentifierEnhancementFactoryTest {
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
         verify(administrationService).getGlobalPropertyValue(PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME, "");
-        assertEquals("PA100002", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("PA100002M", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierWhenThereIsNoPatientIdentifierPrefixGlobalProperty() {
+    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThereIsNoPatientIdentifierPrefixGlobalProperty() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -82,12 +82,13 @@ public class IdentifierEnhancementFactoryTest {
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
         verify(administrationService).getGlobalPropertyValue(PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME, "");
-        assertEquals("100002", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("100002M", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierWhenThatPersonAttributeIsNotPresent() {
+    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThatPersonAttributeIsNotPresent() {
         Patient patient = setUpPatientData();
+        patient.setGender("F");
         patient.setAttributes(null);
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -98,11 +99,11 @@ public class IdentifierEnhancementFactoryTest {
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
         verify(administrationService).getGlobalPropertyValue(PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME, "");
-        assertEquals("100002", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("100002F", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierWhenThereIsNoConceptMappingsToPatientIdentifierPrefix() {
+    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThereIsNoConceptMappingsToPatientIdentifierPrefix() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -113,11 +114,11 @@ public class IdentifierEnhancementFactoryTest {
 
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
-        assertEquals("100002", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("100002M", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierWhenThereIsNoConceptReferenceTerm() {
+    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThereIsNoConceptReferenceTerm() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -129,7 +130,7 @@ public class IdentifierEnhancementFactoryTest {
 
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
-        assertEquals("100002", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("100002M", patient.getPatientIdentifier().getIdentifier());
     }
 
     private Concept setUpConceptData() {
@@ -151,6 +152,7 @@ public class IdentifierEnhancementFactoryTest {
 
     private Patient setUpPatientData() {
         Patient patient = new Patient();
+        patient.setGender("M");
         PatientIdentifier patientIdentifier =
                 new PatientIdentifier("100002", new PatientIdentifierType(), new Location());
         HashSet<PatientIdentifier> patientIdentifiers = new HashSet<>();

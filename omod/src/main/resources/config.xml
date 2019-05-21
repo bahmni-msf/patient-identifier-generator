@@ -13,5 +13,10 @@
 
 	<activator>org.bahmni.module.patientidentifiergenerator.PatientIdentifierGeneratorActivator</activator>
 
+	<advice>
+		<point>org.openmrs.api.PatientService</point>
+		<class>org.bahmni.module.patientidentifiergenerator.advice.BeforeSaveAdvice</class>
+	</advice>
+
 </module>
 

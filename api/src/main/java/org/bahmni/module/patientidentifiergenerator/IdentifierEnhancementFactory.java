@@ -28,7 +28,7 @@ public class IdentifierEnhancementFactory {
     }
 
     public static final String ABBREVIATION_CONCEPT_SOURCE = "Abbreviation";
-    public static final String PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME = "bahmnimsf.patientidentifier.prefixConceptName";
+    public static final String PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME = "bahmni.patientidentifier.prefixConceptName";
 
 
     public void enhanceIdentifier(Patient patient) {

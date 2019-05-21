@@ -45,7 +45,7 @@ public class IdentifierEnhancementFactoryTest {
 
     private IdentifierEnhancementFactory identifierEnhancementFactory;
 
-    public static final String PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME = "bahmnimsf.patientidentifier.prefixConceptName";
+    public static final String PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME = "bahmni.patientidentifier.prefixConceptName";
 
     @Before
     public void setUp() {

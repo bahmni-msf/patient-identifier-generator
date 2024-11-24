@@ -1,16 +1,12 @@
 package org.bahmni.module.patientidentifiergenerator;
 
-import org.openmrs.Concept;
-import org.openmrs.ConceptMap;
-import org.openmrs.ConceptReferenceTerm;
-import org.openmrs.Patient;
-import org.openmrs.PatientIdentifier;
-import org.openmrs.PersonAttribute;
+import org.openmrs.*;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.AdministrationServiceImpl;
 
 import java.util.Collection;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -29,17 +25,19 @@ public class IdentifierEnhancementFactory {
 
     public static final String ABBREVIATION_CONCEPT_SOURCE = "Abbreviation";
     public static final String PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME = "bahmni.patientidentifier.prefixConceptName";
+    public static final String CLINIC_INFO_ATTRIBUTE_NAME = "Clinic info";
 
 
     public void enhanceIdentifier(Patient patient) {
         PatientIdentifier identifier = patient.getPatientIdentifier();
         StringBuilder enhancedId = new StringBuilder();
-        enhancedId.append(getPrefix(patient)).append(identifier.getIdentifier()).append(getGender(patient));
+        enhancedId.append(getPrefix(patient)).append(identifier.getIdentifier()).append(getClinicInfo(patient));
         identifier.setIdentifier(enhancedId.toString());
     }
 
-    private String getGender(Patient patient) {
-        return patient.getGender();
+    private String getClinicInfo(Patient patient) {
+        List<PersonAttribute> personAttributeList = patient.getAttributes(CLINIC_INFO_ATTRIBUTE_NAME);
+        return String.valueOf(personAttributeList.get(0));
     }
 
     private String getPrefix(Patient patient) {

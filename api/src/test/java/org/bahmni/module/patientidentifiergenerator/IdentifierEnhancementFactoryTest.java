@@ -67,7 +67,7 @@ public class IdentifierEnhancementFactoryTest {
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
         verify(administrationService).getGlobalPropertyValue(PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME, "");
-        assertEquals("PA100002M", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("PA000001MC", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class IdentifierEnhancementFactoryTest {
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
         verify(administrationService).getGlobalPropertyValue(PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME, "");
-        assertEquals("100002M", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("000001MC", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class IdentifierEnhancementFactoryTest {
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
         verify(administrationService).getGlobalPropertyValue(PATIENT_IDENTIFIER_PREFIX_CONCEPT_NAME, "");
-        assertEquals("100002F", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("000001MC", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
@@ -114,7 +114,7 @@ public class IdentifierEnhancementFactoryTest {
 
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
-        assertEquals("100002M", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("000001MC", patient.getPatientIdentifier().getIdentifier());
     }
 
     @Test
@@ -130,7 +130,7 @@ public class IdentifierEnhancementFactoryTest {
 
         identifierEnhancementFactory.enhanceIdentifier(patient);
 
-        assertEquals("100002M", patient.getPatientIdentifier().getIdentifier());
+        assertEquals("000001MC", patient.getPatientIdentifier().getIdentifier());
     }
 
     private Concept setUpConceptData() {
@@ -154,15 +154,23 @@ public class IdentifierEnhancementFactoryTest {
         Patient patient = new Patient();
         patient.setGender("M");
         PatientIdentifier patientIdentifier =
-                new PatientIdentifier("100002", new PatientIdentifierType(), new Location());
+                new PatientIdentifier("000001", new PatientIdentifierType(), new Location());
         HashSet<PatientIdentifier> patientIdentifiers = new HashSet<>();
         patientIdentifiers.add(patientIdentifier);
         patient.setIdentifiers(patientIdentifiers);
+
         PersonAttributeType personAttributeType = new PersonAttributeType();
         personAttributeType.setName("personAttribute");
+
+        PersonAttributeType clinicInfoPersonAttributeType = new PersonAttributeType();
+        clinicInfoPersonAttributeType.setName("Clinic info");
+
         PersonAttribute personAttribute = new PersonAttribute(personAttributeType, "100");
+        PersonAttribute mobileClinicAttribute = new PersonAttribute(clinicInfoPersonAttributeType, "MC");
+
         HashSet<PersonAttribute> personAttributes = new HashSet<>();
         personAttributes.add(personAttribute);
+        personAttributes.add(mobileClinicAttribute);
         patient.setAttributes(personAttributes);
         return patient;
     }

@@ -56,7 +56,7 @@ public class IdentifierEnhancementFactoryTest {
     }
 
     @Test
-    public void shouldAddGlobalPropertyPrefixToPatientIdentifierAndGenderAsSuffix() {
+    public void shouldAddGlobalPropertyPrefixToPatientIdentifierAndClinicInfoAsSuffix() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -71,7 +71,7 @@ public class IdentifierEnhancementFactoryTest {
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThereIsNoPatientIdentifierPrefixGlobalProperty() {
+    public void shouldReturnOnlyPatientIdentifierAndClinicInfoWhenThereIsNoPatientIdentifierPrefixGlobalProperty() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -86,10 +86,18 @@ public class IdentifierEnhancementFactoryTest {
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThatPersonAttributeIsNotPresent() {
+    public void shouldReturnOnlyPatientIdentifierAndClinicInfoWhenThatPersonAttributeIsNotPresent() {
         Patient patient = setUpPatientData();
         patient.setGender("F");
         patient.setAttributes(null);
+
+        HashSet<PersonAttribute> personAttributes = new HashSet<>();
+        PersonAttributeType clinicInfoPersonAttributeType = new PersonAttributeType();
+        clinicInfoPersonAttributeType.setName("Clinic info");
+        PersonAttribute mobileClinicAttribute = new PersonAttribute(clinicInfoPersonAttributeType, "MC");
+        personAttributes.add(mobileClinicAttribute);
+        patient.setAttributes(personAttributes);
+
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
         when(conceptService.getConcept("100")).thenReturn(concept);
@@ -103,7 +111,7 @@ public class IdentifierEnhancementFactoryTest {
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThereIsNoConceptMappingsToPatientIdentifierPrefix() {
+    public void shouldReturnOnlyPatientIdentifierAndClinicInfoWhenThereIsNoConceptMappingsToPatientIdentifierPrefix() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);
@@ -118,7 +126,7 @@ public class IdentifierEnhancementFactoryTest {
     }
 
     @Test
-    public void shouldReturnOnlyPatientIdentifierAndGenderWhenThereIsNoConceptReferenceTerm() {
+    public void shouldReturnOnlyPatientIdentifierAndClinicInfoWhenThereIsNoConceptReferenceTerm() {
         Patient patient = setUpPatientData();
         Concept concept = setUpConceptData();
         setupConceptSource("Abbreviation", concept);

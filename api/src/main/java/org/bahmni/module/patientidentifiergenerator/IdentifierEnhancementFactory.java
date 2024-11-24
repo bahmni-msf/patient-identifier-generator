@@ -37,7 +37,11 @@ public class IdentifierEnhancementFactory {
 
     private String getClinicInfo(Patient patient) {
         List<PersonAttribute> personAttributeList = patient.getAttributes(CLINIC_INFO_ATTRIBUTE_NAME);
-        return String.valueOf(personAttributeList.get(0));
+        System.out.println("list of person attributes");
+        System.out.println(personAttributeList);
+        String clinicInfo = personAttributeList.size() > 0 ? String.valueOf(personAttributeList.get(0)) : "";
+        System.out.println(clinicInfo);
+        return clinicInfo;
     }
 
     private String getPrefix(Patient patient) {
